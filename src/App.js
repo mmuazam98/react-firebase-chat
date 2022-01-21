@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useContext } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "@firebase/auth";
+import "./App.css";
+import ChatRoom from "./components/ChatRoom";
+import { ProfileDropdown, SignIn } from "./components/Auth";
+
+// import poo from "./assets/poo.png";
+
+const auth = getAuth();
+
+export const FirebaseAuthContext = createContext(null);
+
+export function useFirebaseAuth() {
+  const context = useContext(FirebaseAuthContext);
+  return context;
 }
 
-export default App;
+export default function App() {
+  const [user, loading] = useAuthState(auth);
+  console.log(loading);
+  return (
+    <FirebaseAuthContext.Provider value={{ auth, user }}>
+      <div className="App">
+        <header className="App-header">
+          <h1>💬</h1>
+          <ProfileDropdown />
+        </header>
+
+        <section>{user ? <ChatRoom /> : <SignIn loading={loading} />}</section>
+      </div>
+    </FirebaseAuthContext.Provider>
+  );
+}

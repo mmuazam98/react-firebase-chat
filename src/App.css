@@ -1,38 +1,266 @@
 .App {
   text-align: center;
+  margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App header {
+  background-color: #091318;
+  height: 10vh;
+  min-height: 50px;
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99;
+  padding: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  background-color: rgb(40, 37, 53);
+  background: #0f2027;
+  background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+}
+.loader-container {
+  display: flex;
+  justify-content: center;
+}
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 2px 5px;
+}
+
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown .profile-image {
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.dropdown .profile-image img {
+  position: relative;
+  top: 1.5px;
+  user-select: none;
+  border: 3px solid transparent;
+}
+.dropdown .profile-image.show img {
+  border-color: #2c5364;
+}
+.dropdown .dropdown-menu {
+  position: absolute;
+  width: 150px;
+  right: 0;
+  background-color: #2c5364;
+  padding: 5px 0;
+  border-radius: 10px;
+  display: none;
+  text-align: left;
+  z-index: 10;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+.dropdown .dropdown-menu.show::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 19px;
+  transform: rotate(45deg);
+  width: 15px;
+  height: 15px;
+  background-color: #2c5364;
+  z-index: -1;
+}
+.dropdown .dropdown-menu.show {
+  display: block;
+}
+.dropdown .dropdown-item {
+  padding: 10px 15px;
+}
+.dropdown .dropdown-item:hover {
+  background-color: #091318;
+}
+.dropdown .dropdown-item svg {
+  position: relative;
+  top: 2px;
+  margin-right: 15px;
+}
+
+.loader {
+  border: 2px solid grey;
+  border-top-color: white;
+  width: 15px;
+  height: 15px;
+  padding: 15px;
+  border-radius: 50%;
+  animation: rotate 1.7s infinite linear;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+main {
+  padding: 10px;
+  height: calc(100vh - 20vh);
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+main::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+main::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #6649b8;
+}
+
+button {
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 15px 25px 18px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 1.25rem;
+}
+button.signIn {
+  background-color: #091318;
+  width: 260px;
+  margin: 0 auto;
+}
+button.signIn img {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+}
+button.signOut {
+  font-size: 1rem;
+  background-color: #2c5364;
+  padding: 10px 20px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.form {
+  height: 10vh;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  font-size: 1.5rem;
+  background-color: #091318;
+}
+
+.form button {
+  width: clamp(20%, 100px);
+  border-radius: 0;
+  background-color: #2c5364;
+}
+
+#messageInput {
+  line-height: 1.5;
+  width: 100%;
+  font-size: 1.5rem;
+  background-color: #091318;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0 10px;
+}
+
+.sign-in {
+  color: #282c34;
+  background: white;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+ul,
+li {
+  text-align: left;
+  list-style: none;
+}
+
+.message {
+  max-width: 500px;
+  margin-bottom: 12px;
+  line-height: 24px;
+  padding: 10px 20px 10px 20px;
+  border-radius: 20px;
+  position: relative;
+  color: white;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.message-container {
+  display: flex;
+  align-items: center;
+}
+
+.sent {
+  flex-direction: row-reverse;
+}
+
+.sent .message {
+  color: white;
+  background: #2c5364;
+  align-self: flex-end;
+}
+.received .message {
+  background: #0f2027;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.message div {
+  font-size: 0.8rem;
+  opacity: 0.5;
+  text-align: right;
+  padding-left: 10px;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .message {
+    max-width: 400px;
+  }
+  input {
+    font-size: 1.25rem;
+  }
+}
+@media (max-width: 490px) {
+  .message {
+    max-width: 350px;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 420px) {
+  .message {
+    max-width: 280px;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media (max-width: 370px) {
+  .message {
+    max-width: 250px;
   }
 }
