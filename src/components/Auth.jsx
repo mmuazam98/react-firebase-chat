@@ -17,9 +17,11 @@ export function SignIn({ loading }) {
   };
 
   return (
-    <button onClick={signInWithGoogle} className="signIn" disabled={loading}>
-      <img src={googleLogo} alt="google" /> Sign In with Google
-    </button>
+    <>
+      <button onClick={signInWithGoogle} className="signIn" disabled={loading}>
+        <img src={googleLogo} alt="google" /> Sign In with Google
+      </button>
+    </>
   );
 }
 

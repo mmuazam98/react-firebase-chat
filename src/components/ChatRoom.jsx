@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFirebaseAuth } from "../App";
 
 import { db } from "../firebaseConfig";
-import { addDoc, collection, orderBy, query, limit, serverTimestamp } from "@firebase/firestore";
+import { addDoc, collection, orderBy, query, serverTimestamp } from "@firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 import { FiSend } from "react-icons/fi";
@@ -55,7 +55,7 @@ export default function ChatRoom() {
       </main>
 
       <form className="form" onSubmit={sendMessage}>
-        <input id="messageInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" />
+        <input id="messageInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" autoComplete={false} />
 
         <button type="submit" disabled={!formValue}>
           <FiSend />
