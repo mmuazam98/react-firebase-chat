@@ -17,10 +17,38 @@ export default function ChatRoom() {
   const orderedMessages = query(messagesRef, orderBy("createdAt"));
 
   const [values, loading] = useCollectionData(orderedMessages);
+  const [totalMessages, setTotalMessages] = useState(+localStorage.getItem("totalMessages") || 0);
 
   useEffect(() => {
     if (!loading) dummy.current.scrollIntoView({ behavior: "smooth" });
   }, [loading]);
+
+  useEffect(() => {
+    function sendNotification(msg) {
+      if (!("Notification" in window)) {
+        return;
+      } else if (Notification.permission === "granted" && msg.uid !== auth.currentUser.uid && values.length > totalMessages) {
+        new Notification("1 new message", {
+          body: msg.text,
+          icon: msg.photoURL,
+        });
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === "granted" && msg.uid !== auth.currentUser.uid && values.length > totalMessages) {
+            new Notification("1 new message", {
+              body: msg.text,
+              icon: msg.photoURL,
+            });
+          }
+        });
+      }
+    }
+    if (values && values.length) sendNotification(values[values.length - 1]);
+    if (values && values.length > totalMessages) {
+      localStorage.setItem("totalMessages", values.length);
+      setTotalMessages(values.length);
+    }
+  }, [values]);
 
   const [formValue, setFormValue] = useState("");
 
@@ -48,14 +76,14 @@ export default function ChatRoom() {
             <div className="loader"></div>
           </div>
         ) : (
-          <>{values && values.map((msg) => <Message key={msg.id} message={msg} />)}</>
+          <>{values && values.length > 0 && values.map((msg) => msg !== undefined && <Message key={msg?.id} message={msg} />)}</>
         )}
 
         <span ref={dummy}></span>
       </main>
 
       <form className="form" onSubmit={sendMessage}>
-        <input id="messageInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" autoComplete={false} />
+        <input id="messageInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" autoComplete={"off"} />
 
         <button type="submit" disabled={!formValue}>
           <FiSend />

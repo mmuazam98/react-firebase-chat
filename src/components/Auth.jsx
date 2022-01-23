@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "@firebase/auth";
-import { useFirebaseAuth } from "../App";
+import { useAppContext, useFirebaseAuth } from "../App";
 
 import { VscSignOut } from "react-icons/vsc";
 import { BiUserCircle } from "react-icons/bi";
 
 import defaultUser from "../assets/default.jpg";
 import googleLogo from "../assets/google.png";
+
+import Profile from "./Profile";
 
 export function SignIn({ loading }) {
   const { auth } = useFirebaseAuth();
@@ -19,14 +21,21 @@ export function SignIn({ loading }) {
   return (
     <>
       <button onClick={signInWithGoogle} className="signIn" disabled={loading}>
-        <img src={googleLogo} alt="google" /> Sign In with Google
+        {loading ? (
+          <div className="loading"></div>
+        ) : (
+          <>
+            <img src={googleLogo} alt="google" /> Sign In with Google
+          </>
+        )}
       </button>
     </>
   );
 }
 
 export function ProfileDropdown() {
-  const { auth } = useFirebaseAuth();
+  const { auth, user } = useFirebaseAuth();
+  const { setProfile } = useAppContext();
   const [show, setShow] = useState(false);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -39,21 +48,31 @@ export function ProfileDropdown() {
     document.addEventListener("click", handleClickOutside, true);
   }, []);
   return (
-    auth.currentUser && (
-      <div className="dropdown" onBlur={() => setShow(false)}>
-        <div className={"profile-image " + (show && "show")} onClick={() => setShow((prev) => !prev)}>
-          <img src={auth.currentUser.photoURL || defaultUser} alt="profile" onError={(e) => (e.target.src = defaultUser)} />
-        </div>
-        <div className={"dropdown-menu " + (show && "show")}>
-          <div className="dropdown-item">
-            <BiUserCircle />
-            Profile
+    user && (
+      <>
+        <div className="dropdown" onBlur={() => setShow(false)}>
+          <div className={"profile-image " + (show && "show")} onClick={() => setShow((prev) => !prev)}>
+            <img src={user.photoURL || defaultUser} alt="profile" onError={(e) => (e.target.src = defaultUser)} />
           </div>
-          <div className="dropdown-item" onClick={() => signOut(auth)}>
-            <VscSignOut /> Sign Out
+          <div className={"dropdown-menu " + (show && "show")}>
+            <div
+              className="dropdown-item"
+              onClick={() =>
+                setProfile({
+                  user: user,
+                  show: true,
+                })
+              }
+            >
+              <BiUserCircle />
+              Profile
+            </div>
+            <div className="dropdown-item" onClick={() => signOut(auth)}>
+              <VscSignOut /> Sign Out
+            </div>
           </div>
         </div>
-      </div>
+      </>
     )
   );
 }
