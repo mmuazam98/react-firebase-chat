@@ -61,16 +61,13 @@ export default function ChatRoom() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
     const { uid, photoURL } = auth.currentUser;
-
     await addDoc(messagesRef, {
       text: formValue.trim(),
       createdAt: serverTimestamp(),
       uid,
       photoURL,
     });
-
     setFormValue("");
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -85,13 +82,10 @@ export default function ChatRoom() {
         ) : (
           <>{values && values.length > 0 && values.map((msg) => msg !== undefined && <Message key={msg?.id} message={msg} />)}</>
         )}
-
         <span ref={dummy}></span>
       </main>
-
       <form className="form" onSubmit={sendMessage}>
         <input id="messageInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" autoComplete={"off"} />
-
         <button type="submit" disabled={!formValue}>
           <FiSend />
         </button>
