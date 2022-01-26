@@ -25,25 +25,32 @@ export default function ChatRoom() {
 
   useEffect(() => {
     function sendNotification(msg) {
-      if (!("Notification" in window)) {
-        return;
-      } else if (Notification.permission === "granted" && msg.uid !== auth.currentUser.uid && values.length > totalMessages) {
-        new Notification("1 new message", {
-          body: msg.text,
-          icon: msg.photoURL,
-        });
-      } else if (Notification.permission !== "denied") {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === "granted" && msg.uid !== auth.currentUser.uid && values.length > totalMessages) {
-            new Notification("1 new message", {
-              body: msg.text,
-              icon: msg.photoURL,
-            });
-          }
-        });
+      try {
+        if (!("Notification" in window)) {
+          return;
+        } else if (Notification.permission === "granted" && msg.uid !== auth.currentUser.uid && values.length > totalMessages) {
+          new Notification("1 new message", {
+            body: msg.text,
+            icon: msg.photoURL,
+          });
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then(function (permission) {
+            if (permission === "granted" && msg.uid !== auth.currentUser.uid && values.length > totalMessages) {
+              new Notification("1 new message", {
+                body: msg.text,
+                icon: msg.photoURL,
+              });
+            }
+          });
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
-    if (values && values.length) sendNotification(values[values.length - 1]);
+    if (values && values.length) {
+      dummy.current.scrollIntoView({ behavior: "smooth" });
+      sendNotification(values[values.length - 1]);
+    }
     if (values && values.length > totalMessages) {
       localStorage.setItem("totalMessages", values.length);
       setTotalMessages(values.length);
