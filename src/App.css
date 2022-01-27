@@ -175,7 +175,7 @@ button:disabled {
   cursor: not-allowed;
 }
 .form {
-  height: 10vh;
+  height: 70px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -214,6 +214,25 @@ li {
   list-style: none;
 }
 
+.message-container {
+  display: flex;
+  align-items: center;
+}
+.message-container svg {
+  opacity: 0;
+  color: #2c5364 !important;
+  transition: all 0.3s cubic-bezier(0.83, -0.53, 0.55, 1.8);
+  cursor: pointer;
+}
+.message-container.sent:hover svg {
+  margin-right: 20px;
+  opacity: 1;
+}
+.message-container.received:hover svg {
+  margin-left: 20px;
+  opacity: 1;
+  color: #0f2027 !important;
+}
 .message {
   max-width: 500px;
   margin-bottom: 12px;
@@ -225,12 +244,6 @@ li {
   text-align: left;
   overflow-wrap: break-word;
 }
-
-.message-container {
-  display: flex;
-  align-items: center;
-}
-
 .sent {
   flex-direction: row-reverse;
 }

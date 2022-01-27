@@ -21,6 +21,14 @@ https://react-firebase-chat-9f5b1.web.app/
 
 <img src="./UI/5.png" width="60%" alt="logo" />
 
+## Bad words filter
+
+<img src="./UI/6.png" width="60%" alt="logo" />
+
+## Copy and unsend messages
+
+<img src="./UI/7.png" width="60%" alt="logo" />
+
 ## Profile
 
 <img src="./UI/3.png" width="60%" alt="logo" />
