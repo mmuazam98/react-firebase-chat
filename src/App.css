@@ -27,7 +27,7 @@
   background-color: rgb(40, 37, 53);
   background: #0f2027;
   background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
-  background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(to right, #2c5364, #203a43, #142b35);
 }
 .loader-container {
   display: flex;
@@ -220,7 +220,7 @@ li {
 }
 .message-container svg {
   opacity: 0;
-  color: #2c5364 !important;
+  color: #091318 !important;
   transition: all 0.3s cubic-bezier(0.83, -0.53, 0.55, 1.8);
   cursor: pointer;
 }
@@ -231,7 +231,7 @@ li {
 .message-container.received:hover svg {
   margin-left: 20px;
   opacity: 1;
-  color: #0f2027 !important;
+  color: #091318 !important;
 }
 .message {
   max-width: 500px;
@@ -328,7 +328,11 @@ li {
 }
 @media (max-width: 490px) {
   .message {
-    max-width: 350px;
+    max-width: 300px;
+  }
+  .message-container img {
+    width: 30px;
+    height: 30px;
   }
 }
 

@@ -76,16 +76,17 @@ export default function ChatRoom() {
   const sendMessage = async (e) => {
     e.preventDefault();
     const { uid, photoURL } = auth.currentUser;
+    const msg = formValue;
+    setFormValue("");
     await addDoc(messagesRef, {
-      text: filter.clean(formValue.trim()),
+      text: filter.clean(msg.trim()),
       createdAt: serverTimestamp(),
       uid,
       photoURL,
     });
-    if (filter.clean(formValue.trim()) !== formValue.trim()) {
+    if (filter.clean(msg.trim()) !== msg.trim()) {
       toast.warning("Hey! Please don't use such words 😒");
     }
-    setFormValue("");
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
 

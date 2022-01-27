@@ -1,21 +1,21 @@
 import { initializeApp } from "firebase/app";
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
 
 import { getFirestore } from "@firebase/firestore";
 
+// import functions from "firebase-functions";
+
+// console.log(functions.config());
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAgdSXkHNUNyqanI81puXbUjmYFsuIkQcM",
-  authDomain: "react-firebase-chat-9f5b1.firebaseapp.com",
-  projectId: "react-firebase-chat-9f5b1",
-  storageBucket: "react-firebase-chat-9f5b1.appspot.com",
-  messagingSenderId: "12356904407",
-  appId: "1:12356904407:web:76ebbab6de9315c91e5792",
-  measurementId: "G-BZCC7F2RND",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId,
 };
 
-// Establish a connection
-// const app = initializeApp(firebaseConfig);
-firebase.initializeApp(firebaseConfig);
-// export const db = getFirestore(app);
-export const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);

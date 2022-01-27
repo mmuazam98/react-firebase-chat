@@ -17,7 +17,7 @@ export default function Message(props) {
   return (
     <>
       <div className={`message-container ${messageClass}`}>
-        <img src={photoURL || defaultUser} alt="profile" onError={(e) => (e.target.src = defaultUser)} />
+        {uid !== user.uid && <img src={photoURL || defaultUser} alt="profile" onError={(e) => (e.target.src = defaultUser)} />}
         <div className="message">
           {text}
           <div>{createdAt && moment(createdAt.seconds * 1000).format("LT")}</div>
