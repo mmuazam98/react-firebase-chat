@@ -5,11 +5,10 @@ import { useAppContext, useFirebaseAuth } from "../App";
 
 import { VscSignOut } from "react-icons/vsc";
 import { BiUserCircle } from "react-icons/bi";
+import { FiGithub } from "react-icons/fi";
 
 import defaultUser from "../assets/default.jpg";
 import googleLogo from "../assets/google.png";
-
-import Profile from "./Profile";
 
 export function SignIn({ loading }) {
   const { auth } = useFirebaseAuth();
@@ -67,8 +66,13 @@ export function ProfileDropdown() {
               <BiUserCircle />
               Profile
             </div>
+            <div className="dropdown-item" onClick={() => window.open("https://github.com/mmuazam98/react-firebase-chat")}>
+              <FiGithub />
+              GitHub
+            </div>
             <div className="dropdown-item" onClick={() => signOut(auth)}>
-              <VscSignOut /> Sign Out
+              <VscSignOut />
+              Sign Out
             </div>
           </div>
         </div>
